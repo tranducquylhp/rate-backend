@@ -3,8 +3,8 @@ package com.codegym.rate.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "instructor")
-public class Instructor {
+@Table(name = "person")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -13,10 +13,10 @@ public class Instructor {
     @OneToMany(targetEntity = StudyProgram.class)
     private StudyProgram studyProgram;
 
-    public Instructor() {
+    public User() {
     }
 
-    public Instructor(String name, StudyProgram studyProgram) {
+    public User(String name, StudyProgram studyProgram) {
         this.name = name;
         this.studyProgram = studyProgram;
     }

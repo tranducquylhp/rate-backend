@@ -13,7 +13,7 @@ public class StudyProgram {
     private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "instructor_id")
-    private Instructor instructor;
+    private User user;
 
     @OneToMany(targetEntity = StandardOutput.class)
     private StandardOutput standardOutput;
@@ -21,10 +21,10 @@ public class StudyProgram {
     public StudyProgram() {
     }
 
-    public StudyProgram(String name, LocalDate date, Instructor instructor, StandardOutput standardOutput) {
+    public StudyProgram(String name, LocalDate date, User user, StandardOutput standardOutput) {
         this.name = name;
         this.date = date;
-        this.instructor = instructor;
+        this.user = user;
         this.standardOutput = standardOutput;
     }
 
@@ -44,12 +44,12 @@ public class StudyProgram {
         this.name = name;
     }
 
-    public Instructor getInstructor() {
-        return instructor;
+    public User getUser() {
+        return user;
     }
 
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public StandardOutput getStandardOutput() {
