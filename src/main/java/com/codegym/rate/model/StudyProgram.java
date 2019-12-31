@@ -1,6 +1,7 @@
 package com.codegym.rate.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "studyProgram")
@@ -9,7 +10,7 @@ public class StudyProgram {
     @GeneratedValue
     private Long id;
     private String name;
-
+    private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
@@ -20,8 +21,9 @@ public class StudyProgram {
     public StudyProgram() {
     }
 
-    public StudyProgram(String name, Instructor instructor, StandardOutput standardOutput) {
+    public StudyProgram(String name, LocalDate date, Instructor instructor, StandardOutput standardOutput) {
         this.name = name;
+        this.date = date;
         this.instructor = instructor;
         this.standardOutput = standardOutput;
     }
@@ -56,5 +58,13 @@ public class StudyProgram {
 
     public void setStandardOutput(StandardOutput standardOutput) {
         this.standardOutput = standardOutput;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }
