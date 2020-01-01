@@ -10,16 +10,30 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    @Column(unique = true, nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String confirmPassword;
 
     @OneToMany(targetEntity = StudyProgram.class)
     private StudyProgram studyProgram;
-
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role roles;
     public User() {
     }
 
-    public User(String name, StudyProgram studyProgram) {
+    public User(String name, String username, String password, String confirmPassword, StudyProgram studyProgram, Role roles) {
         this.name = name;
+        this.username = username;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
         this.studyProgram = studyProgram;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -44,5 +58,37 @@ public class User {
 
     public void setStudyProgram(StudyProgram studyProgram) {
         this.studyProgram = studyProgram;
+    }
+
+    public Role getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Role roles) {
+        this.roles = roles;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }
