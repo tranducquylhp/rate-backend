@@ -44,7 +44,7 @@ public class StudyProgramRestController {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (studyProgram.getUser() != getUserCurrent()){
+        if (studyProgram.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         studyProgramService.save(studyProgram);
@@ -54,7 +54,7 @@ public class StudyProgramRestController {
     @DeleteMapping("studyPrograms/{program_id}")
     public ResponseEntity<Void> deleteStudyProgram(@PathVariable Long program_id){
         StudyProgram studyProgram = studyProgramService.findById(program_id);
-        if (studyProgram.getUser() != getUserCurrent() || studyProgram == null){
+        if (studyProgram.getUser().getId() != getUserCurrent().getId() || studyProgram == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         studyProgramService.delete(studyProgram);
