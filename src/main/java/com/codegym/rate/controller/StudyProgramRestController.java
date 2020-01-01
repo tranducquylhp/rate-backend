@@ -54,7 +54,9 @@ public class StudyProgramRestController {
     @DeleteMapping("studyPrograms/{program_id}")
     public ResponseEntity<Void> deleteStudyProgram(@PathVariable Long program_id){
         StudyProgram studyProgram = studyProgramService.findById(program_id);
-        if (studyProgram.getUser().getId() != getUserCurrent().getId() || studyProgram == null){
+        if (studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         studyProgramService.delete(studyProgram);
@@ -64,7 +66,9 @@ public class StudyProgramRestController {
     @GetMapping("studyPrograms/{program_id}")
     public ResponseEntity<StudyProgram> findStudyProgramById(@PathVariable Long program_id){
         StudyProgram studyProgram = studyProgramService.findById(program_id);
-        if (studyProgram.getUser().getId() != getUserCurrent().getId() || studyProgram == null){
+        if (studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(studyProgram, HttpStatus.OK);

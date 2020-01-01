@@ -34,7 +34,9 @@ public class StandardOutputRestController {
     @GetMapping("/studyPrograms/{program_id}/standardOutputs")
     public ResponseEntity<List<StandardOutput>> standardOutputList(@PathVariable Long program_id){
         StudyProgram studyProgram = studyProgramService.findById(program_id);
-        if (studyProgram.getUser().getId() != getUserCurrent().getId() || studyProgram == null){
+        if (studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         List<StandardOutput> standardOutputs = standardOutputService.findAllByStudyProgram(studyProgram);
@@ -44,7 +46,9 @@ public class StandardOutputRestController {
     @PostMapping("/studyPrograms/{program_id}/standardOutputs")
     public ResponseEntity<StandardOutput> createStandardOutput(@PathVariable Long program_id, @RequestBody StandardOutput standardOutput, BindingResult bindingResult){
         StudyProgram studyProgram = studyProgramService.findById(program_id);
-        if (studyProgram.getUser().getId() != getUserCurrent().getId() || studyProgram == null){
+        if (studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -64,7 +68,9 @@ public class StandardOutputRestController {
         }
 
         StudyProgram studyProgram = studyProgramService.findById(program_id);
-        if (studyProgram.getUser().getId() != getUserCurrent().getId() || studyProgram == null){
+        if (studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -79,7 +85,9 @@ public class StandardOutputRestController {
     @DeleteMapping("/studyPrograms/{program_id}/standardOutputs/{output_id}")
     public ResponseEntity<Void> deleteStandardOutput(@PathVariable Long program_id, @PathVariable Long output_id){
         StudyProgram studyProgram = studyProgramService.findById(program_id);
-        if (studyProgram.getUser().getId() != getUserCurrent().getId() || studyProgram == null){
+        if (studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -92,5 +100,24 @@ public class StandardOutputRestController {
 
         standardOutputService.delete(standardOutput);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/studyPrograms/{program_id}/standardOutputs/{output_id}")
+    public ResponseEntity<StandardOutput> findStarndardOutputById(@PathVariable Long program_id, @PathVariable Long output_id){
+        StudyProgram studyProgram = studyProgramService.findById(program_id);
+        if (studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        StandardOutput standardOutput = standardOutputService.findById(output_id);
+        if (standardOutput == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (standardOutput.getStudyProgram().getId() != studyProgram.getId()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(standardOutput, HttpStatus.OK);
     }
 }
