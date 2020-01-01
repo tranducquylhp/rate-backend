@@ -71,11 +71,11 @@ public class UserRestController {
         if (!userService.isCorrectConfirmPassword(user)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Role role = user.getRoles();
+        Role role = user.getRole();
         if (roleService.findRoleByName(role.getName()) == null){
             roleService.save(role);
         } else role = roleService.findRoleByName(role.getName());
-        user.setRoles(role);
+        user.setRole(role);
         Iterable<User> users = userService.findAll();
         for (User currentUser : users) {
             if (currentUser.getUsername().equals(user.getUsername())) {

@@ -30,7 +30,7 @@ public class UserPrinciple implements UserDetails {
 
     public static UserPrinciple build(User user) {
         Set<Role> roles = new HashSet<>();
-        roles.add(user.getRoles());
+        roles.add(user.getRole());
         List<GrantedAuthority> authorities = roles.stream().map(role ->
                 new SimpleGrantedAuthority(role.getName())
         ).collect(Collectors.toList());

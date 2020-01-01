@@ -24,17 +24,17 @@ public class User {
     private Set<StudyProgram> studyProgram;
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private Role roles;
+    private Role role;
     public User() {
     }
 
-    public User(String name, String username, String password, String confirmPassword, Set<StudyProgram> studyProgram, Role roles) {
+    public User(String name, String username, String password, String confirmPassword, Set<StudyProgram> studyProgram, Role role) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.confirmPassword = confirmPassword;
         this.studyProgram = studyProgram;
-        this.roles = roles;
+        this.role = role;
     }
 
     public Long getId() {
@@ -61,12 +61,13 @@ public class User {
         this.studyProgram = studyProgram;
     }
 
-    public Role getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Role roles) {
-        this.roles = roles;
+    public void setRole(Role role
+    ) {
+        this.role = role;
     }
 
     public String getUsername() {
