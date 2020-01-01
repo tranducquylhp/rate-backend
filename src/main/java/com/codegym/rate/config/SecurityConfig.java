@@ -73,6 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         LOGIN,
                         "/register",
                         "/forgot-password").permitAll()
+                .antMatchers(HttpMethod.POST,
+                        "/new-password/**").access("hasAnyRole('ROLE_USER')")
                 .anyRequest().authenticated()
                 .and().csrf()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
