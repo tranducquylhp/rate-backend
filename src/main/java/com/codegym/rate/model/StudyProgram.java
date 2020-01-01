@@ -11,6 +11,9 @@ public class StudyProgram {
     @GeneratedValue
     private Long id;
     private String name;
+    @Column(columnDefinition = "TEXT")
+    private String description;
+    private String goal;
     private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "instructor_id")
@@ -22,8 +25,10 @@ public class StudyProgram {
     public StudyProgram() {
     }
 
-    public StudyProgram(String name, LocalDate date, User user, Set<StandardOutput> standardOutput) {
+    public StudyProgram(String name, String description, String goal, LocalDate date, User user, Set<StandardOutput> standardOutput) {
         this.name = name;
+        this.description = description;
+        this.goal = goal;
         this.date = date;
         this.user = user;
         this.standardOutput = standardOutput;
@@ -67,5 +72,21 @@ public class StudyProgram {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getGoal() {
+        return goal;
+    }
+
+    public void setGoal(String goal) {
+        this.goal = goal;
     }
 }
