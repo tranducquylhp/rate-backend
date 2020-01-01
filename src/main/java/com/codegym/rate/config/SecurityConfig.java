@@ -76,13 +76,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,
                         "/new-password/**").access("hasAnyRole('ROLE_STUDENT', 'ROLE_INSTRUCTOR')")
                 .antMatchers(HttpMethod.GET,
-                        "/studyPrograms").access("hasAnyRole('ROLE_STUDENT', 'ROLE_INTRUCTOR')")
+                        "/studyPrograms/**").access("hasAnyRole('ROLE_STUDENT', 'ROLE_INSTRUCTOR')")
                 .antMatchers(HttpMethod.POST,
-                        "/studyPrograms").access("hasAnyRole('ROLE_INSTRUCTOR')")
+                        "/studyPrograms/**").access("hasAnyRole('ROLE_INSTRUCTOR')")
                 .antMatchers(HttpMethod.PUT,
-                        "/studyPrograms").access("hasAnyRole('ROLE_INSTRUCTOR')")
+                        "/studyPrograms/**").access("hasAnyRole('ROLE_INSTRUCTOR')")
                 .antMatchers(HttpMethod.DELETE,
-                        "/studyPrograms").access("hasAnyRole('ROLE_INSTUCTOR')")
+                        "/studyPrograms/**").access("hasAnyRole('ROLE_INSTUCTOR')")
                 .anyRequest().authenticated()
                 .and().csrf()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
