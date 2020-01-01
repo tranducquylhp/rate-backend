@@ -2,6 +2,7 @@ package com.codegym.rate.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "studyProgram")
@@ -16,12 +17,12 @@ public class StudyProgram {
     private User user;
 
     @OneToMany(targetEntity = StandardOutput.class)
-    private StandardOutput standardOutput;
+    private Set<StandardOutput> standardOutput;
 
     public StudyProgram() {
     }
 
-    public StudyProgram(String name, LocalDate date, User user, StandardOutput standardOutput) {
+    public StudyProgram(String name, LocalDate date, User user, Set<StandardOutput> standardOutput) {
         this.name = name;
         this.date = date;
         this.user = user;
@@ -52,11 +53,11 @@ public class StudyProgram {
         this.user = user;
     }
 
-    public StandardOutput getStandardOutput() {
+    public Set<StandardOutput> getStandardOutput() {
         return standardOutput;
     }
 
-    public void setStandardOutput(StandardOutput standardOutput) {
+    public void setStandardOutput(Set<StandardOutput> standardOutput) {
         this.standardOutput = standardOutput;
     }
 
