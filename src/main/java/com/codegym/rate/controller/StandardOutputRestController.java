@@ -56,4 +56,19 @@ public class StandardOutputRestController {
         standardOutputService.save(standardOutput);
         return new ResponseEntity<>(standardOutput, HttpStatus.OK);
     }
+
+    @PutMapping("/studyPrograms/{program_id}/standardOutputs")
+    public ResponseEntity<StandardOutput> editStandardOutput(@PathVariable Long program_id, @RequestBody StandardOutput standardOutput, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        StudyProgram studyProgram = studyProgramService.findById(program_id);
+        if (studyProgram.getUser().getId() != getUserCurrent().getId() || studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        standardOutputService.save(standardOutput);
+        return new ResponseEntity<>(standardOutput, HttpStatus.OK);
+    }
 }
