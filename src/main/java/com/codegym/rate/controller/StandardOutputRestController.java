@@ -9,6 +9,7 @@ import com.codegym.rate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class StandardOutputRestController {
         return userService.getCurrentUser();
     }
 
-    @GetMapping("/studyProgram/{program_id}/standardOutputs")
+    @GetMapping("/studyPrograms/{program_id}/standardOutputs")
     public ResponseEntity<List<StandardOutput>> standardOutputList(@PathVariable Long program_id){
         StudyProgram studyProgram = studyProgramService.findById(program_id);
         if (studyProgram.getUser().getId() != getUserCurrent().getId() || studyProgram == null){
@@ -38,5 +39,21 @@ public class StandardOutputRestController {
         }
         List<StandardOutput> standardOutputs = standardOutputService.findAllByStudyProgram(studyProgram);
         return new ResponseEntity<>(standardOutputs, HttpStatus.OK);
+    }
+
+    @PostMapping("/studyPrograms/{program_id}/standardOutputs")
+    public ResponseEntity<StandardOutput> createStandardOutput(@PathVariable Long program_id, @RequestBody StandardOutput standardOutput, BindingResult bindingResult){
+        StudyProgram studyProgram = studyProgramService.findById(program_id);
+        if (studyProgram.getUser().getId() != getUserCurrent().getId() || studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (bindingResult.hasErrors()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        standardOutput.setStudyProgram(studyProgram);
+        standardOutputService.save(standardOutput);
+        return new ResponseEntity<>(standardOutput, HttpStatus.OK);
     }
 }
