@@ -60,4 +60,13 @@ public class StudyProgramRestController {
         studyProgramService.delete(studyProgram);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("studyPrograms/{program_id}")
+    public ResponseEntity<StudyProgram> findStudyProgramById(@PathVariable Long program_id){
+        StudyProgram studyProgram = studyProgramService.findById(program_id);
+        if (studyProgram.getUser().getId() != getUserCurrent().getId() || studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(studyProgram, HttpStatus.OK);
+    }
 }
