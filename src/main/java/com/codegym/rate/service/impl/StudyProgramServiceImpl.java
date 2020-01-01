@@ -1,6 +1,7 @@
 package com.codegym.rate.service.impl;
 
 import com.codegym.rate.model.StudyProgram;
+import com.codegym.rate.model.User;
 import com.codegym.rate.repository.StudyProgramRepository;
 import com.codegym.rate.service.StudyProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,10 @@ public class StudyProgramServiceImpl implements StudyProgramService {
             return studyProgram.get();
         }
         return null;
+    }
+
+    @Override
+    public List<StudyProgram> findAllByUser(User user) {
+        return studyProgramRepository.findAllByUser(user);
     }
 }
