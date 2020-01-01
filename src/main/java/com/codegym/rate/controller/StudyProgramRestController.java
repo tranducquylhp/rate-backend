@@ -39,5 +39,16 @@ public class StudyProgramRestController {
         return new ResponseEntity<>(studyProgram, HttpStatus.OK);
     }
 
+    @PutMapping("studyPrograms")
+    public ResponseEntity<StudyProgram> editStudyProgram(@RequestBody StudyProgram studyProgram, BindingResult bindingResult){
+        if (bindingResult.hasFieldErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (!studyProgram.getUser().equals(getUserCurrent())){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        studyProgramService.save(studyProgram);
+        return new ResponseEntity<>(studyProgram, HttpStatus.OK);
+    }
 
 }
