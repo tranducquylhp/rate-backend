@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface StandardOutputService extends GeneralService<StandardOutput> {
     List<StandardOutput> findAllByStudyProgram(StudyProgram studyProgram);
+    void delete(StandardOutput standardOutput);
 }

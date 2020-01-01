@@ -68,7 +68,29 @@ public class StandardOutputRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        if (standardOutput.getStudyProgram().getId() != studyProgram.getId()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         standardOutputService.save(standardOutput);
         return new ResponseEntity<>(standardOutput, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/studyPrograms/{program_id}/standardOutputs/{output_id}")
+    public ResponseEntity<Void> deleteStandardOutput(@PathVariable Long program_id, @PathVariable Long output_id){
+        StudyProgram studyProgram = studyProgramService.findById(program_id);
+        if (studyProgram.getUser().getId() != getUserCurrent().getId() || studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        StandardOutput standardOutput = standardOutputService.findById(output_id);
+        if (standardOutput == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (standardOutput.getStudyProgram().getId() != studyProgram.getId()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        standardOutputService.delete(standardOutput);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

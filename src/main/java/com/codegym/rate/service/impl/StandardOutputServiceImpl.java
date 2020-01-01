@@ -37,4 +37,9 @@ public class StandardOutputServiceImpl implements StandardOutputService {
     public List<StandardOutput> findAllByStudyProgram(StudyProgram studyProgram) {
         return standardOutputRepository.findAllByStudyProgram(studyProgram);
     }
+
+    @Override
+    public void delete(StandardOutput standardOutput) {
+        standardOutputRepository.delete(standardOutput);
+    }
 }
