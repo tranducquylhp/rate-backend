@@ -5,10 +5,10 @@ import com.codegym.rate.model.User;
 import com.codegym.rate.service.StudyProgramService;
 import com.codegym.rate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +25,19 @@ public class StudyProgramRestController {
     }
 
     @GetMapping("studyPrograms")
-    public List<StudyProgram> studyProgramList(){
-        return studyProgramService.findAllByUser(getUserCurrent());
+    public ResponseEntity<List<StudyProgram>> studyProgramList(){
+        return new ResponseEntity<>(studyProgramService.findAllByUser(getUserCurrent()), HttpStatus.OK);
     }
+
+    @PostMapping("studyPrograms")
+    public ResponseEntity<StudyProgram> createStudyProgram(@RequestBody StudyProgram studyProgram, BindingResult bindingResult){
+        if (bindingResult.hasFieldErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        studyProgram.setUser(getUserCurrent());
+        studyProgramService.save(studyProgram);
+        return new ResponseEntity<>(studyProgram, HttpStatus.OK);
+    }
+
+
 }
