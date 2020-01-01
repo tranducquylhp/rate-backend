@@ -37,4 +37,9 @@ public class StudyProgramServiceImpl implements StudyProgramService {
     public List<StudyProgram> findAllByUser(User user) {
         return studyProgramRepository.findAllByUser(user);
     }
+
+    @Override
+    public void delete(StudyProgram studyProgram) {
+        studyProgramRepository.delete(studyProgram);
+    }
 }

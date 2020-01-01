@@ -44,11 +44,20 @@ public class StudyProgramRestController {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (!studyProgram.getUser().equals(getUserCurrent())){
+        if (studyProgram.getUser() != getUserCurrent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         studyProgramService.save(studyProgram);
         return new ResponseEntity<>(studyProgram, HttpStatus.OK);
     }
 
+    @DeleteMapping("studyPrograms/{program_id}")
+    public ResponseEntity<Void> deleteStudyProgram(@PathVariable Long program_id){
+        StudyProgram studyProgram = studyProgramService.findById(program_id);
+        if (studyProgram.getUser() != getUserCurrent() || studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        studyProgramService.delete(studyProgram);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

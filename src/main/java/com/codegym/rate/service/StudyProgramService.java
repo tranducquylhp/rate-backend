@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface StudyProgramService extends GeneralService<StudyProgram>{
     List<StudyProgram> findAllByUser(User user);
+    void delete(StudyProgram studyProgram);
 }
