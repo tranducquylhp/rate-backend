@@ -1,10 +1,10 @@
 package com.codegym.rate.controller;
 
 import com.codegym.rate.model.StandardOutput;
-import com.codegym.rate.model.StudyProgram;
+import com.codegym.rate.model.Module;
 import com.codegym.rate.model.User;
 import com.codegym.rate.service.StandardOutputService;
-import com.codegym.rate.service.StudyProgramService;
+import com.codegym.rate.service.ModuleService;
 import com.codegym.rate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class StandardOutputRestController {
     private UserService userService;
 
     @Autowired
-    private StudyProgramService studyProgramService;
+    private ModuleService moduleService;
 
     @Autowired
     private StandardOutputService standardOutputService;
@@ -31,24 +31,24 @@ public class StandardOutputRestController {
         return userService.getCurrentUser();
     }
 
-    @GetMapping("/studyPrograms/{program_id}/standardOutputs")
+    @GetMapping("/modules/{program_id}/standardOutputs")
     public ResponseEntity<List<StandardOutput>> standardOutputList(@PathVariable Long program_id){
-        StudyProgram studyProgram = studyProgramService.findById(program_id);
-        if (studyProgram == null){
+        Module module = moduleService.findById(program_id);
+        if (module == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
+        } else if (module.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        List<StandardOutput> standardOutputs = standardOutputService.findAllByStudyProgram(studyProgram);
+        List<StandardOutput> standardOutputs = standardOutputService.findAllByModule(module);
         return new ResponseEntity<>(standardOutputs, HttpStatus.OK);
     }
 
-    @PostMapping("/studyPrograms/{program_id}/standardOutputs")
+    @PostMapping("/modules/{program_id}/standardOutputs")
     public ResponseEntity<StandardOutput> createStandardOutput(@PathVariable Long program_id, @RequestBody StandardOutput standardOutput, BindingResult bindingResult){
-        StudyProgram studyProgram = studyProgramService.findById(program_id);
-        if (studyProgram == null){
+        Module module = moduleService.findById(program_id);
+        if (module == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
+        } else if (module.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -56,25 +56,25 @@ public class StandardOutputRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        standardOutput.setStudyProgram(studyProgram);
+        standardOutput.setModule(module);
         standardOutputService.save(standardOutput);
         return new ResponseEntity<>(standardOutput, HttpStatus.OK);
     }
 
-    @PutMapping("/studyPrograms/{program_id}/standardOutputs")
+    @PutMapping("/modules/{program_id}/standardOutputs")
     public ResponseEntity<StandardOutput> editStandardOutput(@PathVariable Long program_id, @RequestBody StandardOutput standardOutput, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        StudyProgram studyProgram = studyProgramService.findById(program_id);
-        if (studyProgram == null){
+        Module module = moduleService.findById(program_id);
+        if (module == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
+        } else if (module.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        if (standardOutput.getStudyProgram().getId() != studyProgram.getId()){
+        if (standardOutput.getModule().getId() != module.getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -82,19 +82,19 @@ public class StandardOutputRestController {
         return new ResponseEntity<>(standardOutput, HttpStatus.OK);
     }
 
-    @DeleteMapping("/studyPrograms/{program_id}/standardOutputs/{output_id}")
+    @DeleteMapping("/modules/{program_id}/standardOutputs/{output_id}")
     public ResponseEntity<Void> deleteStandardOutput(@PathVariable Long program_id, @PathVariable Long output_id){
-        StudyProgram studyProgram = studyProgramService.findById(program_id);
-        if (studyProgram == null){
+        Module module = moduleService.findById(program_id);
+        if (module == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
+        } else if (module.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         StandardOutput standardOutput = standardOutputService.findById(output_id);
         if (standardOutput == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (standardOutput.getStudyProgram().getId() != studyProgram.getId()){
+        } else if (standardOutput.getModule().getId() != module.getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -102,19 +102,19 @@ public class StandardOutputRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/studyPrograms/{program_id}/standardOutputs/{output_id}")
+    @GetMapping("/modules/{program_id}/standardOutputs/{output_id}")
     public ResponseEntity<StandardOutput> findStarndardOutputById(@PathVariable Long program_id, @PathVariable Long output_id){
-        StudyProgram studyProgram = studyProgramService.findById(program_id);
-        if (studyProgram == null){
+        Module module = moduleService.findById(program_id);
+        if (module == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
+        } else if (module.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         StandardOutput standardOutput = standardOutputService.findById(output_id);
         if (standardOutput == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (standardOutput.getStudyProgram().getId() != studyProgram.getId()){
+        } else if (standardOutput.getModule().getId() != module.getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 

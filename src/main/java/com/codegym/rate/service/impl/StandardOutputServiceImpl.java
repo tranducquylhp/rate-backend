@@ -1,7 +1,7 @@
 package com.codegym.rate.service.impl;
 
 import com.codegym.rate.model.StandardOutput;
-import com.codegym.rate.model.StudyProgram;
+import com.codegym.rate.model.Module;
 import com.codegym.rate.repository.StandardOutputRepository;
 import com.codegym.rate.service.StandardOutputService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +34,8 @@ public class StandardOutputServiceImpl implements StandardOutputService {
     }
 
     @Override
-    public List<StandardOutput> findAllByStudyProgram(StudyProgram studyProgram) {
-        return standardOutputRepository.findAllByStudyProgram(studyProgram);
+    public List<StandardOutput> findAllByModule(Module module) {
+        return standardOutputRepository.findAllByModule(module);
     }
 
     @Override

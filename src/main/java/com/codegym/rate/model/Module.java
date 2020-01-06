@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = "studyProgram")
-public class StudyProgram {
+@Table(name = "module")
+public class Module {
     @Id
     @GeneratedValue
     private Long id;
@@ -25,10 +25,10 @@ public class StudyProgram {
     @OneToMany(targetEntity = StandardOutput.class)
     private Set<StandardOutput> standardOutput;
 
-    public StudyProgram() {
+    public Module() {
     }
 
-    public StudyProgram(String name, String description, String goal, LocalDate date, User user, Set<User> students, Set<StandardOutput> standardOutput) {
+    public Module(String name, String description, String goal, LocalDate date, User user, Set<User> students, Set<StandardOutput> standardOutput) {
         this.name = name;
         this.description = description;
         this.goal = goal;

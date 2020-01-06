@@ -12,16 +12,16 @@ public class StandardOutput {
     private String rate;
 
     @ManyToOne
-    @JoinColumn(name = "studyProgram_id")
-    private StudyProgram studyProgram;
+    @JoinColumn(name = "module_id")
+    private Module module;
 
     public StandardOutput() {
     }
 
-    public StandardOutput(String name, String rate, StudyProgram studyProgram) {
+    public StandardOutput(String name, String rate, Module module) {
         this.name = name;
         this.rate = rate;
-        this.studyProgram = studyProgram;
+        this.module = module;
     }
 
     public Long getId() {
@@ -40,12 +40,12 @@ public class StandardOutput {
         this.name = name;
     }
 
-    public StudyProgram getStudyProgram() {
-        return studyProgram;
+    public Module getModule() {
+        return module;
     }
 
-    public void setStudyProgram(StudyProgram studyProgram) {
-        this.studyProgram = studyProgram;
+    public void setModule(Module module) {
+        this.module = module;
     }
 
     public String getRate() {
