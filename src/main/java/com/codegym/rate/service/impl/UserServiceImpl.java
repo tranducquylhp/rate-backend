@@ -120,4 +120,9 @@ public class UserServiceImpl implements UserService {
         }
         return isCorrentConfirmPassword;
     }
+
+    @Override
+    public List<User> findAllByNameContaining(String name) {
+        return userRepository.findAllByNameContaining(name);
+    }
 }
