@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -125,5 +126,14 @@ public class UserRestController {
     public ResponseEntity<User> userCurrent(){
         User user = userService.getCurrentUser();
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/findName")
+    public ResponseEntity<List<User>> findUserByName(@RequestParam("name") String name){
+        List<User> users = userService.findAllByNameContaining(name);
+        if (users == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }
