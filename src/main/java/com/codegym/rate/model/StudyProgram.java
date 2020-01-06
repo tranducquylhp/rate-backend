@@ -19,18 +19,22 @@ public class StudyProgram {
     @JoinColumn(name = "instructor_id")
     private User user;
 
+    @OneToMany(targetEntity = User.class)
+    private Set<User> students;
+
     @OneToMany(targetEntity = StandardOutput.class)
     private Set<StandardOutput> standardOutput;
 
     public StudyProgram() {
     }
 
-    public StudyProgram(String name, String description, String goal, LocalDate date, User user, Set<StandardOutput> standardOutput) {
+    public StudyProgram(String name, String description, String goal, LocalDate date, User user, Set<User> students, Set<StandardOutput> standardOutput) {
         this.name = name;
         this.description = description;
         this.goal = goal;
         this.date = date;
         this.user = user;
+        this.students = students;
         this.standardOutput = standardOutput;
     }
 
@@ -88,5 +92,13 @@ public class StudyProgram {
 
     public void setGoal(String goal) {
         this.goal = goal;
+    }
+
+    public Set<User> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<User> students) {
+        this.students = students;
     }
 }
