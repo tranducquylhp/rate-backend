@@ -2,14 +2,17 @@ package com.codegym.rate.service.impl;
 
 import com.codegym.rate.model.Module;
 import com.codegym.rate.model.StudyProgram;
+import com.codegym.rate.model.User;
 import com.codegym.rate.repository.ModuleRepository;
 import com.codegym.rate.repository.StudyProgramRepository;
 import com.codegym.rate.service.StudyProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class StudyProgramServiceImpl implements StudyProgramService {
     @Autowired
     private StudyProgramRepository studyProgramRepository;
@@ -23,6 +26,11 @@ public class StudyProgramServiceImpl implements StudyProgramService {
     @Override
     public void delete(StudyProgram studyProgram) {
         studyProgramRepository.delete(studyProgram);
+    }
+
+    @Override
+    public List<StudyProgram> findAllByUser(User user) {
+        return studyProgramRepository.findAllByUser(user);
     }
 
     @Override

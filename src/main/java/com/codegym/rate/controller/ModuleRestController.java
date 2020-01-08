@@ -63,9 +63,9 @@ public class ModuleRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("modules/{program_id}")
-    public ResponseEntity<Module> findModuleById(@PathVariable Long program_id){
-        Module module = moduleService.findById(program_id);
+    @GetMapping("modules/{module_id}")
+    public ResponseEntity<Module> findModuleById(@PathVariable Long module_id){
+        Module module = moduleService.findById(module_id);
         if (module == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else if (module.getUser().getId() != getUserCurrent().getId()){
