@@ -12,16 +12,28 @@ public class StudyProgram {
     private String name;
     private String image;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     @OneToMany(targetEntity = Module.class)
     private Set<Module> modules;
 
     public StudyProgram() {
     }
 
-    public StudyProgram(String name, String image, Set<Module> modules) {
+    public StudyProgram(String name, String image, User user, Set<Module> modules) {
         this.name = name;
         this.image = image;
+        this.user = user;
         this.modules = modules;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {
