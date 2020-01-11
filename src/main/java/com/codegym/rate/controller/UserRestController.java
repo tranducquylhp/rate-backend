@@ -3,10 +3,8 @@ package com.codegym.rate.controller;
 import com.codegym.rate.model.JwtResponse;
 import com.codegym.rate.model.Role;
 import com.codegym.rate.model.User;
-import com.codegym.rate.model.VerificationToken;
 import com.codegym.rate.service.RoleService;
 import com.codegym.rate.service.UserService;
-import com.codegym.rate.service.VerificationTokenService;
 import com.codegym.rate.service.impl.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,9 +31,6 @@ public class UserRestController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-
-    @Autowired
-    private VerificationTokenService verificationTokenService;
 
     @Autowired
     private JwtService jwtService;
@@ -86,9 +81,6 @@ public class UserRestController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setConfirmPassword(passwordEncoder.encode(user.getConfirmPassword()));
         userService.save(user);
-        VerificationToken token = new VerificationToken(user);
-        token.setExpiryDate(10);
-        verificationTokenService.save(token);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 

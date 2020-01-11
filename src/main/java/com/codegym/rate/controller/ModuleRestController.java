@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/studyProgram/{module_id}")
+@RequestMapping("/studyProgram/{program_id}")
 public class ModuleRestController {
     @Autowired
     private ModuleService moduleService;
