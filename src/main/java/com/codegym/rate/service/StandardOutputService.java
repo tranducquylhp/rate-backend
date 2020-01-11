@@ -8,4 +8,5 @@ import java.util.List;
 public interface StandardOutputService extends GeneralService<StandardOutput> {
     List<StandardOutput> findAllByModule(Module module);
     void delete(StandardOutput standardOutput);
+    boolean isStandardOutputOfModule(Module module, StandardOutput standardOutput);
 }

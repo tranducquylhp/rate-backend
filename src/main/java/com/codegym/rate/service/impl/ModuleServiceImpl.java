@@ -43,4 +43,12 @@ public class ModuleServiceImpl implements ModuleService {
     public void delete(Module module) {
         moduleRepository.delete(module);
     }
+
+    @Override
+    public boolean isModuleOfStudyProgram(StudyProgram studyProgram, Module module) {
+        if (module.getStudyProgram().getId() == studyProgram.getId()){
+            return true;
+        }
+        return false;
+    }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/studyProgram/{program_id}")
+@RequestMapping("/studyPrograms/{program_id}")
 public class ModuleRestController {
     @Autowired
     private ModuleService moduleService;
@@ -29,15 +29,16 @@ public class ModuleRestController {
         return userService.getCurrentUser();
     }
 
-    @ModelAttribute("studyProgramCurrent")
-    public StudyProgram studyProgramCurrent(Long program_id){
-        StudyProgram studyProgram = studyProgramService.findById(program_id);
-        return studyProgram;
-    }
-
     @GetMapping("/modules")
     public ResponseEntity<List<Module>> moduleList(@PathVariable Long program_id){
-        return new ResponseEntity<>(moduleService.findAllByStudyProgram(studyProgramCurrent(program_id)), HttpStatus.OK);
+        StudyProgram studyProgram = studyProgramService.findById(program_id);
+        if (studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (!studyProgramService.isStudyProgramOfUser(getUserCurrent(), studyProgram)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<Module> modules = moduleService.findAllByStudyProgram(studyProgram);
+        return new ResponseEntity<>(modules, HttpStatus.OK);
     }
 
     @PostMapping("modules")
@@ -45,7 +46,13 @@ public class ModuleRestController {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        module.setStudyProgram(studyProgramCurrent(program_id));
+        StudyProgram studyProgram = studyProgramService.findById(program_id);
+        if (studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (!studyProgramService.isStudyProgramOfUser(getUserCurrent(), studyProgram)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        module.setStudyProgram(studyProgram);
         moduleService.save(module);
         return new ResponseEntity<>(module, HttpStatus.OK);
     }
@@ -55,7 +62,11 @@ public class ModuleRestController {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (module.getStudyProgram().getId() != program_id){
+        StudyProgram studyProgram = studyProgramService.findById(program_id);
+        if (studyProgram == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (!studyProgramService.isStudyProgramOfUser(getUserCurrent(), studyProgram)
+                    || !moduleService.isModuleOfStudyProgram(studyProgram, module)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         moduleService.save(module);
@@ -77,9 +88,11 @@ public class ModuleRestController {
     @GetMapping("modules/{module_id}")
     public ResponseEntity<Module> findModuleById(@PathVariable Long program_id, @PathVariable Long module_id){
         Module module = moduleService.findById(module_id);
-        if (module == null){
+        StudyProgram studyProgram = studyProgramService.findById(program_id);
+        if (studyProgram == null || module == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (module.getStudyProgram().getId() != program_id){
+        } else if (!studyProgramService.isStudyProgramOfUser(getUserCurrent(), studyProgram)
+                    || !moduleService.isModuleOfStudyProgram(studyProgram, module)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(module, HttpStatus.OK);

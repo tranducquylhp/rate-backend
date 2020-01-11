@@ -10,4 +10,5 @@ public interface StudyProgramService extends GeneralService<StudyProgram> {
     List<Module> findAllByStudyProgram(StudyProgram studyProgram);
     void delete(StudyProgram studyProgram);
     List<StudyProgram> findAllByUser(User user);
+    boolean isStudyProgramOfUser(User user, StudyProgram studyProgram);
 }

@@ -9,4 +9,5 @@ import java.util.List;
 public interface ModuleService extends GeneralService<Module>{
     List<Module> findAllByStudyProgram(StudyProgram studyProgram);
     void delete(Module module);
+    boolean isModuleOfStudyProgram(StudyProgram studyProgram, Module module);
 }

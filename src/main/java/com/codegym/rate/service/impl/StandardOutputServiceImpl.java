@@ -42,4 +42,12 @@ public class StandardOutputServiceImpl implements StandardOutputService {
     public void delete(StandardOutput standardOutput) {
         standardOutputRepository.delete(standardOutput);
     }
+
+    @Override
+    public boolean isStandardOutputOfModule(Module module, StandardOutput standardOutput) {
+        if (standardOutput.getModule().getId() == module.getId()){
+            return true;
+        }
+        return false;
+    }
 }

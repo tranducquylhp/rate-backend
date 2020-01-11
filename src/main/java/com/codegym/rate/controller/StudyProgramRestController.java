@@ -20,6 +20,7 @@ public class StudyProgramRestController {
 
     @Autowired
     private UserService userService;
+
     @ModelAttribute("userCurrent")
     public User getUserCurrent(){
         return userService.getCurrentUser();
@@ -57,7 +58,7 @@ public class StudyProgramRestController {
         StudyProgram studyProgram = studyProgramService.findById(program_id);
         if (studyProgram == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
+        } else if (!studyProgramService.isStudyProgramOfUser(getUserCurrent(), studyProgram)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         studyProgramService.delete(studyProgram);
@@ -69,7 +70,7 @@ public class StudyProgramRestController {
         StudyProgram studyProgram = studyProgramService.findById(program_id);
         if (studyProgram == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (studyProgram.getUser().getId() != getUserCurrent().getId()){
+        } else if (!studyProgramService.isStudyProgramOfUser(getUserCurrent(), studyProgram)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(studyProgram, HttpStatus.OK);

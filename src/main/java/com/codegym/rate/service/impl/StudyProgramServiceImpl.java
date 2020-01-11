@@ -34,6 +34,14 @@ public class StudyProgramServiceImpl implements StudyProgramService {
     }
 
     @Override
+    public boolean isStudyProgramOfUser(User user, StudyProgram studyProgram) {
+        if (studyProgram.getUser().getId() == user.getId()){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public List<StudyProgram> findAll() {
         return studyProgramRepository.findAll();
     }
