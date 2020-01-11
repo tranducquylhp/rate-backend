@@ -76,4 +76,17 @@ public class StudyProgramRestController {
         return new ResponseEntity<>(studyProgram, HttpStatus.OK);
     }
 
+    @PostMapping("studyPrograms/{program_id}/{user_id}")
+    public ResponseEntity<StudyProgram> addStudent(@PathVariable Long program_id, @PathVariable Long user_id){
+        User student = userService.findById(user_id);
+        StudyProgram studyProgram = studyProgramService.findById(program_id);
+        if (studyProgram == null || student == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (!studyProgramService.isStudyProgramOfUser(getUserCurrent(), studyProgram)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        studyProgramService.addStudent(student, studyProgram);
+        return new ResponseEntity<>(studyProgram, HttpStatus.OK);
+    }
 }

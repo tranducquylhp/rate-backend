@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,12 +52,18 @@ public class UserRestController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<User> findUserByUsername(@RequestParam("username") String username){
-        User user = userService.findByUsername(username);
-        if (user == null){
+    public ResponseEntity<List<User>> findUserByUsername(@RequestParam("username") Optional<String> username){
+        List<User> users = new ArrayList<>();
+        if (username.isPresent()) {
+            User user = userService.findByUsername(username.get());
+            users.add(user);
+        } else {
+            users = userService.findAll();
+        }
+        if (users == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PostMapping("/register")

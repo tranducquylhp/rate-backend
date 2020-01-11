@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class StudyProgramServiceImpl implements StudyProgramService {
@@ -39,6 +40,14 @@ public class StudyProgramServiceImpl implements StudyProgramService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void addStudent(User user, StudyProgram studyProgram) {
+        Set<User> students = studyProgram.getStudents();
+        students.add(user);
+        studyProgram.setStudents(students);
+        studyProgramRepository.save(studyProgram);
     }
 
     @Override
