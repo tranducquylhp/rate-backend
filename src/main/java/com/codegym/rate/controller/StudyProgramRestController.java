@@ -1,6 +1,5 @@
 package com.codegym.rate.controller;
 
-import com.codegym.rate.model.Module;
 import com.codegym.rate.model.StudyProgram;
 import com.codegym.rate.model.User;
 import com.codegym.rate.service.StudyProgramService;
@@ -75,4 +74,5 @@ public class StudyProgramRestController {
         }
         return new ResponseEntity<>(studyProgram, HttpStatus.OK);
     }
+
 }

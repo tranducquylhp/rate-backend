@@ -15,16 +15,11 @@ public class Module {
     private String description;
     private String goal;
     private LocalDate date;
-    @ManyToOne
-    @JoinColumn(name = "instructor_id")
-    private User user;
 
     @ManyToOne
     @JoinColumn(name = "studyProgram_id")
     private StudyProgram studyProgram;
 
-    @OneToMany(targetEntity = User.class)
-    private Set<User> students;
 
     @OneToMany(targetEntity = StandardOutput.class)
     private Set<StandardOutput> standardOutput;
@@ -32,23 +27,13 @@ public class Module {
     public Module() {
     }
 
-    public Module(String name, String description, String goal, LocalDate date, User user, StudyProgram studyProgram, Set<User> students, Set<StandardOutput> standardOutput) {
+    public Module(String name, String description, String goal, LocalDate date, StudyProgram studyProgram, Set<StandardOutput> standardOutput) {
         this.name = name;
         this.description = description;
         this.goal = goal;
         this.date = date;
-        this.user = user;
         this.studyProgram = studyProgram;
-        this.students = students;
         this.standardOutput = standardOutput;
-    }
-
-    public StudyProgram getStudyProgram() {
-        return studyProgram;
-    }
-
-    public void setStudyProgram(StudyProgram studyProgram) {
-        this.studyProgram = studyProgram;
     }
 
     public Long getId() {
@@ -67,30 +52,6 @@ public class Module {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Set<StandardOutput> getStandardOutput() {
-        return standardOutput;
-    }
-
-    public void setStandardOutput(Set<StandardOutput> standardOutput) {
-        this.standardOutput = standardOutput;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -107,11 +68,27 @@ public class Module {
         this.goal = goal;
     }
 
-    public Set<User> getStudents() {
-        return students;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setStudents(Set<User> students) {
-        this.students = students;
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public StudyProgram getStudyProgram() {
+        return studyProgram;
+    }
+
+    public void setStudyProgram(StudyProgram studyProgram) {
+        this.studyProgram = studyProgram;
+    }
+
+    public Set<StandardOutput> getStandardOutput() {
+        return standardOutput;
+    }
+
+    public void setStandardOutput(Set<StandardOutput> standardOutput) {
+        this.standardOutput = standardOutput;
     }
 }

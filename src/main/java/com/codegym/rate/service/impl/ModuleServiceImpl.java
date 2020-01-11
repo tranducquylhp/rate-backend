@@ -1,6 +1,7 @@
 package com.codegym.rate.service.impl;
 
 import com.codegym.rate.model.Module;
+import com.codegym.rate.model.StudyProgram;
 import com.codegym.rate.model.User;
 import com.codegym.rate.repository.ModuleRepository;
 import com.codegym.rate.service.ModuleService;
@@ -34,8 +35,8 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public List<Module> findAllByUser(User user) {
-        return moduleRepository.findAllByUser(user);
+    public List<Module> findAllByStudyProgram(StudyProgram studyProgram) {
+        return moduleRepository.findAllByStudyProgram(studyProgram);
     }
 
     @Override

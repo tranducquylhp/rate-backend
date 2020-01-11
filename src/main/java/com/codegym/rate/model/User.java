@@ -21,19 +21,19 @@ public class User {
     private String confirmPassword;
 
     @OneToMany(targetEntity = Module.class)
-    private Set<Module> module;
+    private Set<StudyProgram> studyProgram;
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
     public User() {
     }
 
-    public User(String name, String username, String password, String confirmPassword, Set<Module> module, Role role) {
+    public User(String name, String username, String password, String confirmPassword, Set<StudyProgram> studyProgram, Role role) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.confirmPassword = confirmPassword;
-        this.module = module;
+        this.studyProgram = studyProgram;
         this.role = role;
     }
 
@@ -53,12 +53,12 @@ public class User {
         this.name = name;
     }
 
-    public Set<Module> getModule() {
-        return module;
+    public Set<StudyProgram> getStudyProgram() {
+        return studyProgram;
     }
 
-    public void setModule(Set<Module> module) {
-        this.module = module;
+    public void setStudyProgram(Set<StudyProgram> studyProgram) {
+        this.studyProgram = studyProgram;
     }
 
     public Role getRole() {

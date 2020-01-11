@@ -13,8 +13,9 @@ public class StudyProgram {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "instructor_id")
     private User user;
+
     @OneToMany(targetEntity = Module.class)
     private Set<Module> modules;
 
